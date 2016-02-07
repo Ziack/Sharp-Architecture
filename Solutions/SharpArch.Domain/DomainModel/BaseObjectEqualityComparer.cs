@@ -18,6 +18,7 @@
     ///         use IEqualityComparer's GetHashCode() method.
     ///     </para>
     /// </remarks>
+    [PublicAPI]
     public class BaseObjectEqualityComparer<T> : IEqualityComparer<T>
         where T : BaseObject
     {

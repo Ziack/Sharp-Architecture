@@ -18,6 +18,7 @@ namespace SharpArch.NHibernate
     ///     * Direct instantiation; e.g., new GenericDao&lt;Customer, string&gt;
     ///     * Spring configuration; e.g., <object id = "CustomerDao" type = "SharpArch.Data.NHibernateSupport.GenericDao&lt;CustomerAlias, string>, SharpArch.Data" autowire = "byName" />
     /// </summary>
+    [PublicAPI]
     public class NHibernateRepositoryWithTypedId<T, TId> : INHibernateRepositoryWithTypedId<T, TId>
     {
         #region Constants and Fields

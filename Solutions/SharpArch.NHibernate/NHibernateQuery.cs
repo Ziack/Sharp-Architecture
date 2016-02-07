@@ -4,6 +4,7 @@ namespace SharpArch.NHibernate
     using global::NHibernate;
     using JetBrains.Annotations;
 
+    [PublicAPI]
     public abstract class NHibernateQuery
     {
         protected NHibernateQuery([NotNull] ISession session)

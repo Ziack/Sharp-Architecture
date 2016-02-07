@@ -3,10 +3,11 @@ namespace SharpArch.NHibernate.Contracts.Repositories
     using System.Collections.Generic;
 
     using global::NHibernate;
-
+    using JetBrains.Annotations;
     using SharpArch.Domain;
     using SharpArch.Domain.PersistenceSupport;
 
+    [PublicAPI]
     public interface INHibernateRepositoryWithTypedId<T, in TId> : IRepositoryWithTypedId<T, TId>
     {
         #region Public Methods

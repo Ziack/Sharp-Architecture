@@ -6,8 +6,6 @@ namespace Tests.SharpArch.Domain.DomainModel
 {
     using System;
     using NUnit.Framework;
-
-    using global::SharpArch.Domain;
     using global::SharpArch.Domain.DomainModel;
 
     [TestFixture]

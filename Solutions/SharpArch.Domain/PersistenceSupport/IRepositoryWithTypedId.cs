@@ -1,6 +1,7 @@
 namespace SharpArch.Domain.PersistenceSupport
 {
     using System.Collections.Generic;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Defines the public members of a class that implements the repository pattern for entities
@@ -8,6 +9,7 @@ namespace SharpArch.Domain.PersistenceSupport
     /// </summary>
     /// <typeparam name="T">The entity type.</typeparam>
     /// <typeparam name="TId">The type of the entity ID.</typeparam>
+    [PublicAPI]
     public interface IRepositoryWithTypedId<T, in TId>
     {
         /// <summary>

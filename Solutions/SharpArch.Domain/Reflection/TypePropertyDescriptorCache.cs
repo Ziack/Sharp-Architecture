@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Concurrent;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Property descriptors cache.
     /// </summary>
     /// <remarks>Implementation is thread-safe.</remarks>
+    [PublicAPI]
     public class TypePropertyDescriptorCache : ITypePropertyDescriptorCache
     {
         private readonly ConcurrentDictionary<Type, TypePropertyDescriptor> cache =
@@ -19,6 +21,7 @@
         /// <returns>
         ///     <see cref="TypePropertyDescriptor" /> or <c>null</c> if does not exists.
         /// </returns>
+        [MustUseReturnValue]
         public TypePropertyDescriptor Find(Type type)
         {
             TypePropertyDescriptor result;

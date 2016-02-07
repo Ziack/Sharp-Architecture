@@ -2,6 +2,7 @@
 {
     using global::NHibernate;
     using global::NUnit.Framework;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Provides a behavior driven approach to unit testsing data persisted to a database.  
@@ -13,6 +14,7 @@
     ///     a "live" development database, such as a SQL Server instance, use <see cref = "DatabaseRepositoryTestsBase" />
     ///     as your test fixture base class.
     /// </summary>
+    [PublicAPI]
     public abstract class RepositoryBehaviorSpecificationTestsBase : BehaviorSpecificationTestsBase
     {
         private ISession session;

@@ -1,8 +1,8 @@
 ﻿namespace SharpArch.Testing.NUnit.NHibernate
 {
-    using System.Diagnostics;
     using global::NHibernate;
     using global::NUnit.Framework;
+    using JetBrains.Annotations;
     using SharpArch.NHibernate;
 
     /// <summary>
@@ -13,6 +13,7 @@
     ///     If you'd prefer a more behavior driven approach to testing against the in-memory database,
     ///     use <see cref = "RepositoryBehaviorSpecificationTestsBase" /> instead.
     /// </summary>
+    [PublicAPI]
     public abstract class RepositoryTestsBase
     {
         protected TransactionManager TransactionManager { get; private set; }

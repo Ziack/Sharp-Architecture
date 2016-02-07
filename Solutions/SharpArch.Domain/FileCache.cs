@@ -3,10 +3,12 @@
     using System;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Provides file cache helper methods.
     /// </summary>
+    [PublicAPI]
     public static class FileCache
     {
         /// <summary>
@@ -20,7 +22,7 @@
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
             }
 
             try
@@ -54,17 +56,10 @@
         /// -or- <paramref name="path" /> specified a directory.
         /// -or- The caller does not have the required permission. 
         /// -or specified file is a hidden file.</exception>
-        public static void StoreInCache<T>(T obj, string path) where T : class
+        public static void StoreInCache<T>([NotNull] T obj, [NotNull] string path) where T : class
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
-
-            if (string.IsNullOrEmpty(path))
-            {
-                throw new ArgumentNullException("path");
-            }
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+            if (String.IsNullOrEmpty(path)) throw new ArgumentException("Path is null or empty.", nameof(path));
 
             using (var file = File.Open(path, FileMode.Create))
             {
@@ -72,14 +67,26 @@
             }
         }
 
-        internal static void Save<T>(Stream file, T obj) where T : class
+        /// <summary>
+        /// Saves object to stream in BinaryFormat.
+        /// </summary>
+        /// <typeparam name="T">Type of the object.</typeparam>
+        /// <param name="stream">The stream.</param>
+        /// <param name="obj">The object.</param>
+        internal static void Save<T>(Stream stream, T obj) where T : class
         {
-            new BinaryFormatter().Serialize(file, obj);
+            new BinaryFormatter().Serialize(stream, obj);
         }
 
-        internal static T Load<T>(Stream file) where T : class
+        /// <summary>
+        /// Load object from the stream.
+        /// </summary>
+        /// <typeparam name="T">Type of the object.</typeparam>        
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
+        internal static T Load<T>(Stream stream) where T : class
         {
-            return new BinaryFormatter().Deserialize(file) as T;
+            return new BinaryFormatter().Deserialize(stream) as T;
         }
 
 

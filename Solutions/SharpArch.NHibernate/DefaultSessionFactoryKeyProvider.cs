@@ -1,11 +1,14 @@
 ﻿namespace SharpArch.NHibernate
 {
-  /// <summary>
-  /// Implementation of <see cref="ISessionFactoryKeyProvider" /> that uses 
-  /// the <see cref="SessionFactoryAttribute" /> to determine the session
-  /// factory key.
-  /// </summary>
-  public class DefaultSessionFactoryKeyProvider : ISessionFactoryKeyProvider
+    using JetBrains.Annotations;
+
+    /// <summary>
+    /// Implementation of <see cref="ISessionFactoryKeyProvider" /> that uses 
+    /// the <see cref="SessionFactoryAttribute" /> to determine the session
+    /// factory key.
+    /// </summary>
+    [PublicAPI]
+    public class DefaultSessionFactoryKeyProvider : ISessionFactoryKeyProvider
   {
     public string GetKey()
     {

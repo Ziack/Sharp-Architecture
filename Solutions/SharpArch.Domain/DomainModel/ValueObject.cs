@@ -1,9 +1,9 @@
 ﻿namespace SharpArch.Domain.DomainModel
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Provides a standard base class for facilitating comparison of value objects using all the object's properties.
@@ -15,6 +15,7 @@
     ///     an in depth and conclusive resolution.
     /// </remarks>
     [Serializable]
+    [PublicAPI]
     public abstract class ValueObject : BaseObject
     {
         /// <summary>

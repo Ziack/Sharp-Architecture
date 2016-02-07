@@ -1,6 +1,7 @@
 namespace SharpArch.NHibernate.FluentNHibernate
 {
     using global::FluentNHibernate.Automapping;
+    using JetBrains.Annotations;
 
     /// <summary>
     /// Fluent NHibernate auto-mapping model generator.
@@ -8,6 +9,7 @@ namespace SharpArch.NHibernate.FluentNHibernate
     /// <remarks>
     /// Interface implementors will be automatically executed by TestDatabaseInitializer during test database initialization.
     /// </remarks>
+    [PublicAPI]
     public interface IAutoPersistenceModelGenerator
     {
         AutoPersistenceModel Generate();

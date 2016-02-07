@@ -9,7 +9,9 @@ namespace SharpArch.Web.Mvc.ModelBinder
     using System.Web.Mvc;
 
     using Domain.DomainModel;
+    using JetBrains.Annotations;
 
+    [PublicAPI]
     public class SharpModelBinder : DefaultModelBinder
     {
         private const string IdPropertyName = "Id";

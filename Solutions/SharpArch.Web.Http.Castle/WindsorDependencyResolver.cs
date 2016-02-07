@@ -9,6 +9,7 @@ namespace SharpArch.Web.Http.Castle
     /// <summary>
     ///     Resolves HTTP dependencies using Castle Windsor.
     /// </summary>
+    [PublicAPI]
     public class WindsorDependencyResolver : IDependencyResolver
     {
         readonly IWindsorContainer container;

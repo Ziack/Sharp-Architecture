@@ -1,11 +1,10 @@
 namespace SharpArch.Domain.DomainModel
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Xml.Serialization;
-
+    using JetBrains.Annotations;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -13,6 +12,7 @@ namespace SharpArch.Domain.DomainModel
     ///     http://devlicio.us/blogs/billy_mccafferty/archive/2007/04/25/using-equals-gethashcode-effectively.aspx
     /// </summary>
     [Serializable]
+    [PublicAPI]
     public abstract class EntityWithTypedId<TId> : ValidatableObject, IEntityWithTypedId<TId>
     {
         /// <summary>

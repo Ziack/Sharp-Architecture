@@ -5,7 +5,6 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using Domain;
     using global::FluentNHibernate.Automapping;
     using global::FluentNHibernate.Cfg;
     using global::FluentNHibernate.Cfg.Db;
@@ -20,6 +19,7 @@
     /// <remarks>
     ///     Transient object, session factory must be redistered as singletone in DI Container.
     /// </remarks>
+    [PublicAPI]
     public class NHibernateSessionFactoryBuilder
     {
         /// <summary>

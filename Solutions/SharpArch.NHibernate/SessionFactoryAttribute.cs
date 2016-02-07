@@ -1,7 +1,6 @@
 ﻿namespace SharpArch.NHibernate
 {
     using System;
-    using Domain;
     using JetBrains.Annotations;
 
     /// <summary>
@@ -11,10 +10,15 @@
     ///     communicate with different databases.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class SessionFactoryAttribute : Attribute
+    [PublicAPI]
+    public sealed class SessionFactoryAttribute : Attribute
     {
         private readonly string factoryKey;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SessionFactoryAttribute"/> class.
+        /// </summary>
+        /// <param name="factoryKey">The factory key.</param>
         public SessionFactoryAttribute(string factoryKey)
         {
             this.factoryKey = factoryKey;

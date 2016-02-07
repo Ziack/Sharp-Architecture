@@ -4,7 +4,7 @@ namespace SharpArch.Web.Mvc
     using System.Data;
     using System.Runtime.CompilerServices;
     using System.Web.Mvc;
-    using SharpArch.Domain;
+    using JetBrains.Annotations;
     using SharpArch.Domain.PersistenceSupport;
 
     /// <summary>
@@ -21,6 +21,8 @@ namespace SharpArch.Web.Mvc
     ///     Transaction will be rolled back if there was unhandled exeption in action or model vaildation was failed and
     ///     <see cref="RollbackOnModelValidationError" /> is <c>true</c>.
     /// </remarks>
+    [PublicAPI]
+    [BaseTypeRequired(typeof(IController))]
     public sealed class TransactionAttribute : ActionFilterAttribute
     {
         /// <summary>

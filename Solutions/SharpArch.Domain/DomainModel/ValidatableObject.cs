@@ -4,11 +4,13 @@
     using System.Collections.Generic;
 
     using System.ComponentModel.DataAnnotations;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Serves as the base class for objects that are validatable.
     /// </summary>
     [Serializable]
+    [PublicAPI]
     public abstract class ValidatableObject : BaseObject
     {
         /// <summary>

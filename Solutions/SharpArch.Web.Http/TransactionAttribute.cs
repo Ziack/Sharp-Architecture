@@ -7,12 +7,13 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
     using JetBrains.Annotations;
-    using SharpArch.Domain;
     using SharpArch.Domain.PersistenceSupport;
 
     /// <summary>
     ///     An attribute that implies a transaction.
     /// </summary>
+    [PublicAPI]
+    [BaseTypeRequired(typeof(IHttpController))]
     public sealed class TransactionAttribute : ActionFilterAttribute
     {
         /// <summary>

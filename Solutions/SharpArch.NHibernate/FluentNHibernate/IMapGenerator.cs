@@ -1,6 +1,7 @@
 ﻿namespace SharpArch.NHibernate.FluentNHibernate
 {
     using System.Xml;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Facilitates the visitor pattern for <see cref = "GeneratorHelper" /> to spit out the NHibernate
@@ -14,10 +15,12 @@
     /// <remarks>
     ///     This is not necessary for Fluent Nhibernate to function properly.
     /// </remarks>
+    [PublicAPI]
     public interface IMapGenerator
     {
         string FileName { get; }
 
+        [NotNull]
         XmlDocument Generate();
     }
 }

@@ -9,17 +9,10 @@ namespace Tests.SharpArch.Domain.DataAnnotationsValidator
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
-
-
-    using CommonServiceLocator.WindsorAdapter;
-    using global::Castle.MicroKernel.Registration;
-    using global::Castle.Windsor;
     using global::SharpArch.Domain;
     using global::SharpArch.Domain.DomainModel;
     using global::SharpArch.Domain.PersistenceSupport;
     using global::SharpArch.NHibernate.NHibernateValidator;
-
-    using Microsoft.Practices.ServiceLocation;
     using Moq;
     using NUnit.Framework;
 
@@ -68,32 +61,17 @@ namespace Tests.SharpArch.Domain.DataAnnotationsValidator
             Assert.That(contractor.IsValid(ValidationContextFor(contractor)));
         }
 
-        public void InitServiceLocatorInitializer()
-        {
-            IWindsorContainer container = new WindsorContainer();
-
-            container.Register(
-                Component
-                    .For(typeof(IEntityDuplicateChecker))
-                    .ImplementedBy(typeof(DuplicateCheckerStub))
-                    .Named("duplicateChecker"));
-
-            IServiceLocator windsorServiceLocator = new WindsorServiceLocator(container);
-            ServiceLocator.SetLocatorProvider(() => windsorServiceLocator);
-        }
-
         [Test]
         public void MayNotUseValidatorWithEntityHavingDifferentIdType()
         {
             var invalidCombination = new ObjectWithStringIdAndValidatorForIntId { Name = "whatever" };
 
-            Assert.Throws<PreconditionException>(() => invalidCombination.ValidationResults(ValidationContextFor(invalidCombination)));
+            Assert.Throws<InvalidOperationException>(() => invalidCombination.ValidationResults(ValidationContextFor(invalidCombination)));
         }
 
         [SetUp]
         public void SetUp()
         {
-            //this.InitServiceLocatorInitializer();
             serviceProviderMock = new Mock<IServiceProvider>();
             serviceProviderMock.Setup(sp => sp.GetService(typeof (IEntityDuplicateChecker)))
                 .Returns(new DuplicateCheckerStub());

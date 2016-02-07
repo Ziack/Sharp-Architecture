@@ -34,7 +34,9 @@
         /// <returns></returns>
         public TypePropertyDescriptor GetOrAdd(Type type, Func<Type, TypePropertyDescriptor> factory)
         {
-            Check.Require(factory != null, "Value factory can not be null.");
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (factory == null) throw new ArgumentNullException(nameof(factory));
+
             return this.cache.GetOrAdd(type, factory);
         }
 

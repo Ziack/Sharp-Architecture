@@ -1,10 +1,12 @@
 ﻿namespace SharpArch.Web.Http
 {
+    using System;
     using System.Data;
     using System.Net.Http;
     using System.Runtime.CompilerServices;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
+    using JetBrains.Annotations;
     using SharpArch.Domain;
     using SharpArch.Domain.PersistenceSupport;
 
@@ -69,13 +71,15 @@
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [NotNull]
         private static ITransactionManager GetTransactionManager(HttpRequestMessage request)
         {
             var transactionManager =
                 (ITransactionManager) request.GetDependencyScope().GetService(typeof(ITransactionManager));
-            Check.Require(transactionManager != null,
-                "TransactionManager was null, register an implementation of TransactionManager in the IoC container.");
-
+            if (transactionManager == null)
+                throw new InvalidOperationException(
+                    "TransactionManager was null, register an implementation of TransactionManager in the IoC container.");
+            
             return transactionManager;
         }
     }

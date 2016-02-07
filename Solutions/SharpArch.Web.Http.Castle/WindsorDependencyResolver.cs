@@ -3,8 +3,8 @@ namespace SharpArch.Web.Http.Castle
     using System;
     using System.Collections.Generic;
     using System.Web.Http.Dependencies;
-    using SharpArch.Domain;
     using global::Castle.Windsor;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Resolves HTTP dependencies using Castle Windsor.
@@ -17,9 +17,10 @@ namespace SharpArch.Web.Http.Castle
         ///     Initializes a new instance of the <see cref="WindsorDependencyResolver" /> class.
         /// </summary>
         /// <param name="container">The container.</param>
-        public WindsorDependencyResolver(IWindsorContainer container)
+        public WindsorDependencyResolver([NotNull] IWindsorContainer container)
         {
-            Check.Require(container != null);
+            if (container == null) throw new ArgumentNullException(nameof(container));
+
 
             this.container = container;
         }

@@ -11,6 +11,7 @@ namespace SharpArch.NHibernate
     
     using global::NHibernate;
     using global::NHibernate.Criterion;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Provides a fully loaded DAO which may be created in a few ways including:
@@ -26,10 +27,17 @@ namespace SharpArch.NHibernate
 
         #endregion
 
-        public NHibernateRepositoryWithTypedId(ITransactionManager transactionManager, ISession session)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NHibernateRepositoryWithTypedId{T, TId}"/> class.
+        /// </summary>
+        /// <param name="transactionManager">The transaction manager.</param>
+        /// <param name="session">The session.</param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public NHibernateRepositoryWithTypedId([NotNull] ITransactionManager transactionManager,
+            [NotNull] ISession session)
         {
-            Check.Require(transactionManager != null, "TransactionManager is required.");
-            Check.Require(session != null, "Session is required.");
+            if (transactionManager == null) throw new ArgumentNullException(nameof(transactionManager));
+            if (session == null) throw new ArgumentNullException(nameof(session));
 
             this.transactionManager = transactionManager;
             this.session = session;
@@ -76,9 +84,10 @@ namespace SharpArch.NHibernate
             return criteria.List<T>();
         }
 
-        public virtual IList<T> FindAll(IDictionary<string, object> propertyValuePairs)
+        public virtual IList<T> FindAll([NotNull] IDictionary<string, object> propertyValuePairs)
         {
-            Check.Require(propertyValuePairs != null && propertyValuePairs.Count > 0, "propertyValuePairs was null or empty; " + "it has to have at least one property/value pair in it");
+            if (propertyValuePairs == null) throw new ArgumentNullException(nameof(propertyValuePairs));
+            if (propertyValuePairs.Count == 0) throw new ArgumentException("No properties specified. Please specify at least one property/value pair.", nameof(propertyValuePairs));
 
             ICriteria criteria = this.Session.CreateCriteria(typeof(T));
 
@@ -186,9 +195,12 @@ namespace SharpArch.NHibernate
         ///     Although SaveOrUpdate _can_ be invoked to update an object with an assigned Id, you are 
         ///     hereby forced instead to use Save/Update for better clarity.
         /// </summary>
-        public virtual T SaveOrUpdate(T entity)
+        public virtual T SaveOrUpdate([NotNull] T entity)
         {
-            Check.Require(!(entity is IHasAssignedId<TId>), "For better clarity and reliability, Entities with an assigned Id must call Save or Update");
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            if (!(entity is IHasAssignedId<TId>))
+                throw new InvalidOperationException(
+                    "For better clarity and reliability, Entities with an assigned Id must call Save() or Update().");
 
             this.Session.SaveOrUpdate(entity);
             return entity;

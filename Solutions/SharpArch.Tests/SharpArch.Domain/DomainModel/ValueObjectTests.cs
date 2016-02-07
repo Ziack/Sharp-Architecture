@@ -1,5 +1,10 @@
+// ReSharper disable PublicMembersMustHaveComments
+// ReSharper disable HeapView.ClosureAllocation
+// ReSharper disable HeapView.ObjectAllocation.Evident
+// ReSharper disable HeapView.BoxingAllocation
 namespace Tests.SharpArch.Domain.DomainModel
 {
+    using System;
     using NUnit.Framework;
 
     using global::SharpArch.Domain;
@@ -13,7 +18,7 @@ namespace Tests.SharpArch.Domain.DomainModel
         {
             var invalidValueObject = new ValueObjectWithDomainSignature();
 
-            Assert.Throws<PreconditionException>(() => invalidValueObject.GetSignatureProperties());
+            Assert.Throws<InvalidOperationException>(() => invalidValueObject.GetSignatureProperties());
         }
 
         [Test]
@@ -98,7 +103,7 @@ namespace Tests.SharpArch.Domain.DomainModel
         }
 
         [Test]
-        public void ShouldnotBeEqualWithDifferentReferencesAndDifferentIds()
+        public void ShouldNotBeEqualWithDifferentReferencesAndDifferentIds()
         {
             var valType = new DummyValueType { Id = 1, Name = "Luis" };
             var anotherValType = new DummyValueType { Id = 10, Name = "Luis" };

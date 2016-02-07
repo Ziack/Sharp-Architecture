@@ -1,5 +1,6 @@
 namespace SharpArch.Web.Mvc
 {
+    using System;
     using System.Data;
     using System.Runtime.CompilerServices;
     using System.Web.Mvc;
@@ -72,9 +73,9 @@ namespace SharpArch.Web.Mvc
         /// <param name="filterContext"></param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            Check.Require(this.TransactionManager != null,
-                "TransactionManager was null, make sure implementation of TransactionManager is registered in the IoC container.");
-
+            if (TransactionManager == null)
+                throw new InvalidOperationException(
+                    "TransactionManager was null, make sure implementation of TransactionManager is registered in the IoC container.");
             if (filterContext.IsChildAction)
             {
                 return;

@@ -11,6 +11,7 @@
     using global::NHibernate;
     using global::NHibernate.Criterion;
     using global::NHibernate.Util;
+    using JetBrains.Annotations;
 
     public class EntityDuplicateChecker : IEntityDuplicateChecker
     {
@@ -24,11 +25,17 @@
         private static readonly DateTime UninitializedDatetime = default(DateTime);
 
         /// <summary>
-        ///     Provides a behavior specific repository for checking if a duplicate exists of an existing entity.
+        /// Provides a behavior specific repository for checking if a duplicate exists of an existing entity.
         /// </summary>
-        public bool DoesDuplicateExistWithTypedIdOf<TId>(IEntityWithTypedId<TId> entity)
+        /// <typeparam name="TId">Entity Id type.</typeparam>
+        /// <param name="entity">The entity.</param>
+        /// <returns>
+        ///   <c>true</c> if a duplicate exists, <c>false</c> otherwise.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">entity is null. </exception>
+        public bool DoesDuplicateExistWithTypedIdOf<TId>([NotNull] IEntityWithTypedId<TId> entity)
         {
-            Check.Require(entity != null, "Entity may not be null when checking for duplicates");
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             var session = GetSessionFor(entity);
 
@@ -81,6 +88,7 @@
                     : Restrictions.IsNull(propertyName));
         }
 
+        [NotNull]
         private ISession GetSessionFor(object entity)
         {
             //var factoryKey = SessionFactoryKeyHelper.GetKeyFrom(entity);

@@ -25,6 +25,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>bin\Debug\SharpArch.RavenDb.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -61,6 +62,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\..\Packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Packages\RavenDB.Client.3.0.30000\lib\net45\Raven.Abstractions.dll</HintPath>

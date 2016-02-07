@@ -11,6 +11,7 @@
     using global::FluentNHibernate.Cfg.Db;
     using global::NHibernate;
     using global::NHibernate.Cfg;
+    using JetBrains.Annotations;
     using NHibernateValidator;
 
     /// <summary>
@@ -52,6 +53,7 @@
         /// Creates the session factory.
         /// </summary>
         /// <returns> NHibernate session factory <see cref="ISessionFactory"/>.</returns>
+        [NotNull]
         public ISessionFactory BuildSessionFactory()
         {
             var configuration = BuildConfiguration();
@@ -71,6 +73,7 @@
         /// To make persistent changes use <seealso cref="ExposeConfiguration"/>.
         /// </para>
         /// </remarks>
+        [NotNull]
         public Configuration BuildConfiguration()
         {
             var configuration = configurationCache.LoadConfiguration(DefaultConfigurationName, configFile, mappingAssemblies);
@@ -91,11 +94,12 @@
         /// Changes to configuration will be persisted in configuration cache, if it is enabled.
         /// In case changes must not be persisted in cache, they must be applied after <seealso cref="BuildConfiguration"/>.
         /// </remarks>
-        public NHibernateSessionFactoryBuilder ExposeConfiguration(Action<Configuration> config)
+        [NotNull]
+        public NHibernateSessionFactoryBuilder ExposeConfiguration([NotNull] Action<Configuration> config)
         {
-            Check.Require(config != null, "Please provide callback.");
-            this.exposeConfiguration = config;
+            if (config == null) throw new ArgumentNullException(nameof(config));
 
+            this.exposeConfiguration = config;
             return this;
         }
 
@@ -104,53 +108,68 @@
             return exposeConfiguration != null;
         }
 
-        public NHibernateSessionFactoryBuilder UseConfigurationCache(INHibernateConfigurationCache configurationCache)
+        [NotNull]
+        public NHibernateSessionFactoryBuilder UseConfigurationCache(
+            [NotNull] INHibernateConfigurationCache configurationCache)
         {
-            Check.Require(configurationCache != null, "Please provide configuration cache instance.");
+            if (configurationCache == null) throw new ArgumentNullException(nameof(configurationCache), "Please provide configuration cache instance.");
             this.configurationCache = configurationCache;
             return this;
         }
 
-        public NHibernateSessionFactoryBuilder AddMappingAssemblies(IEnumerable<string> mappingAssemblies)
+        [NotNull]
+        public NHibernateSessionFactoryBuilder AddMappingAssemblies([NotNull] IEnumerable<string> mappingAssemblies)
         {
-            Check.Require(mappingAssemblies != null, "Please specify mapping assemblies.");
+            if (mappingAssemblies == null) throw new ArgumentNullException(nameof(mappingAssemblies), "Please specify mapping assemblies.");
+
             this.mappingAssemblies.AddRange(mappingAssemblies);
             return this;
         }
 
-        public NHibernateSessionFactoryBuilder UseAutoPersitenceModel(AutoPersistenceModel autoPersistenceModel)
+        [NotNull]
+        public NHibernateSessionFactoryBuilder UseAutoPersitenceModel(
+            [NotNull] AutoPersistenceModel autoPersistenceModel)
         {
-            Check.Require(autoPersistenceModel != null);
+            if (autoPersistenceModel == null) throw new ArgumentNullException(nameof(autoPersistenceModel));
+            
             this.autoPersistenceModel = autoPersistenceModel;
             return this;
         }
 
-        public NHibernateSessionFactoryBuilder UseProperties(IDictionary<string, string> properties)
+        [NotNull]
+        public NHibernateSessionFactoryBuilder UseProperties([NotNull] IDictionary<string, string> properties)
         {
-            Check.Require(properties != null);
-            this.properties = properties;
+            if (properties == null) throw new ArgumentNullException(nameof(properties));
 
+            this.properties = properties;
             return this;
         }
 
 
+        [NotNull]
         public NHibernateSessionFactoryBuilder UseDataAnnotationValidators(bool addDataAnnotatonValidators)
         {
             this.useDataAnnotationValidators = addDataAnnotatonValidators;
             return this;
         }
 
+        [NotNull]
         public NHibernateSessionFactoryBuilder UseConfigFile(string nhibernateConfigFile)
         {
-            Check.Require(!string.IsNullOrEmpty(nhibernateConfigFile), "NHibernate config file must be specified");
+            if (string.IsNullOrWhiteSpace(nhibernateConfigFile))
+                throw new ArgumentException("NHibernate config file must be specified.", nameof(nhibernateConfigFile));
+            
             configFile = nhibernateConfigFile;
 
             return this;
         }
 
-        public NHibernateSessionFactoryBuilder UsePersistenceConfigurer(IPersistenceConfigurer persistenceConfigurer)
+        [NotNull]
+        public NHibernateSessionFactoryBuilder UsePersistenceConfigurer(
+            [NotNull] IPersistenceConfigurer persistenceConfigurer)
         {
-            Check.Require(persistenceConfigurer != null);
+            if (persistenceConfigurer == null) throw new ArgumentNullException(nameof(persistenceConfigurer));
+            
             this.persistenceConfigurer = persistenceConfigurer;
             return this;
         }
@@ -186,7 +205,7 @@
             return fluentConfig.BuildConfiguration();
         }
 
-        void AddValidatorsAndExposeConfiguration(Configuration e)
+        private void AddValidatorsAndExposeConfiguration(Configuration e)
         {
             if (useDataAnnotationValidators)
             {
@@ -200,7 +219,7 @@
         }
 
         /// <summary>
-        ///     Loads configuration from properties dictionary and from external file if avaiable.
+        ///     Loads configuration from properties dictionary and from external file if available.
         /// </summary>
         /// <returns></returns>
         private Configuration LoadExternalConfiguration()

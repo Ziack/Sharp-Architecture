@@ -2,6 +2,7 @@
 {
     using System;
     using Domain;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Provides the ability to decorate repositories with an attribute defining the factory key
@@ -29,11 +30,12 @@
         ///     SessionFactoryAttribute, if available.  Defaults to the DefaultFactoryKey 
         ///     if not found.
         /// </summary>
-        public static string GetKeyFrom(object target)
+        [NotNull]
+        public static string GetKeyFrom([NotNull] object target)
         {
+            if (target == null) throw new ArgumentNullException(nameof(target));
             // todo: cache sessionKey value
-            Check.Require(target != null, "Target is required.");
-
+            
             var objectType = target.GetType();
 
             var attributes = objectType.GetCustomAttributes(typeof(SessionFactoryAttribute), true);

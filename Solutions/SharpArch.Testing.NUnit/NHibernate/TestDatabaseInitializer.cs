@@ -78,11 +78,11 @@
         {
             var mappingAssembliesSetting = ConfigurationManager.AppSettings["nhibernate.mapping.assembly"];
 
-            Check.Require(
-                !string.IsNullOrWhiteSpace(mappingAssembliesSetting),
-                "Please add an AppSetting to your app.config for 'nhibernate.mapping.assembly.' This setting " +
-                "takes a comma delimited list of assemblies containing NHibernate mapping files. Including '.dll' " +
-                "at the end of each is optional.");
+            if (string.IsNullOrWhiteSpace(mappingAssembliesSetting))
+                throw new InvalidOperationException(
+                    "Please add an AppSetting to your app.config for 'nhibernate.mapping.assembly.' This setting " +
+                        "takes a comma delimited list of assemblies containing NHibernate mapping files. Including '.dll' " +
+                        "at the end of each is optional.");
 
             var assemblies =
                 mappingAssembliesSetting.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)

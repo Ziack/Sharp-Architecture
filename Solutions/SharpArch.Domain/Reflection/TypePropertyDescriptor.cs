@@ -2,6 +2,7 @@ namespace SharpArch.Domain.Reflection
 {
     using System;
     using System.Reflection;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Contains injectable properties per type.
@@ -16,9 +17,9 @@ namespace SharpArch.Domain.Reflection
         /// </summary>
         /// <param name="ownerType">Type of the object.</param>
         /// <param name="properties">The injectable properties.</param>
-        public TypePropertyDescriptor(Type ownerType, PropertyInfo[] properties)
+        public TypePropertyDescriptor([NotNull]Type ownerType, [CanBeNull] PropertyInfo[] properties)
         {
-            Check.Require(ownerType != null, "Owner type information can not be null.");
+            if (ownerType == null) throw new ArgumentNullException(nameof(ownerType));
 
             OwnerType = ownerType;
             if (properties != null && properties.Length > 0)
@@ -55,7 +56,7 @@ namespace SharpArch.Domain.Reflection
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return OwnerType.Equals(other.OwnerType);
+            return OwnerType == other.OwnerType;
         }
 
         public override bool Equals(object obj)

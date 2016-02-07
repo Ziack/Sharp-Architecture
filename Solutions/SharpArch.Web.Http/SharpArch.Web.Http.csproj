@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\SharpArch.Web.Http.xml</DocumentationFile>
@@ -42,6 +42,10 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\..\Packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>

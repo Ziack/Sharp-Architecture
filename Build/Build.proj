@@ -161,6 +161,11 @@
 
   <Import Project="$(BuildPath)\BuildSystem.proj" />
 
+  <PropertyGroup>
+    <DuplicatesPath>$(DropsPath)\Duplicates</DuplicatesPath>
+	<DupFinderExe>$(SolutionRoot)\Packages\JetBrains.ReSharper.CommandLineTools.10.0.20151218.134438\tools\dupfinder.exe</DupFinderExe>
+  </PropertyGroup>
+
   <Target Name="Build"
         DependsOnTargets="CleanSolution;
                           UpdateAssemblyVersion;
@@ -181,5 +186,14 @@
                             Package;
                             PackageNuget;
                             BuildSuccess" />
+
+  <Target Name="FindDuplicates">
+    <MakeDir Directories="$(DuplicatesPath)" ContinueOnError="true" />
+    <Exec
+      WorkingDirectory="$(SolutionsPath)"
+      Command="$(DupFinderExe) /output=&quot;$(DuplicatesPath)\dupReport.xml&quot; /show-text &quot;$(SolutionsPath)\SharpArch.sln&quot; /exclude=&quot;SharpArch.Tests\**\*.cs" /> 
+	  <!-- /config-create=&quot;dupFinder.config&quot; -->
+    <XslTransformation XslInputPath="$(MSBuildProjectDirectory)\dupFinder.xslt" XmlInputPaths="$(DuplicatesPath)\dupReport.xml" OutputPaths="$(DuplicatesPath)\report.html"/>
+  </Target>
 
 </Project>

@@ -12,6 +12,8 @@ build:
   project: Build\build.proj
   parallel: true
   verbosity: normal
+before_build:
+- cmd: nuget restore Solutions/SharpArch.sln
 build_script:
   - cmd: '"%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe" Build\Build.proj /t:Build,Package,FindDuplicates,InspectCode,PackageNuget'
 artifacts:

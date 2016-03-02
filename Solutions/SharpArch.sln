@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{ED61719A
 		..\Build\Build.proj = ..\Build\Build.proj
 		..\Build\BuildAndPackage.cmd = ..\Build\BuildAndPackage.cmd
 		..\Build\BuildAndTest.cmd = ..\Build\BuildAndTest.cmd
+		..\Build\codeInspections.xslt = ..\Build\codeInspections.xslt
+		..\Build\dupFinder.xslt = ..\Build\dupFinder.xslt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D5220D0A-6367-41C4-8409-989C4A909113}"

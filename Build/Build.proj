@@ -12,6 +12,8 @@
     <RunMSpecTests>True</RunMSpecTests>
     <MSpecRunner>mspec-clr4.exe</MSpecRunner>
     <MSpecSpecificationAssemblies>"$(MSBuildProjectDirectory)\..\Solutions\SharpArch.Specifications\Bin\Release\SharpArch.Specifications.dll"</MSpecSpecificationAssemblies>
+    <ReSharperToolsVersion>10.0.20151218.134438</ReSharperToolsVersion>
+	<XsltTransformVersion>0.2.2.0</XsltTransformVersion>
   </PropertyGroup>
 
   <!-- build settings -->
@@ -150,7 +152,6 @@
       <NuspecFile>SharpArch.Web.RavenDB.nuspec</NuspecFile>
     </NugetPackage>
 
-
   </ItemGroup>
 
   <PropertyGroup>
@@ -162,10 +163,25 @@
   <Import Project="$(BuildPath)\BuildSystem.proj" />
 
   <PropertyGroup>
-    <DuplicatesPath>$(DropsPath)\Duplicates</DuplicatesPath>
-	<DupFinderExe>$(SolutionRoot)\Packages\JetBrains.ReSharper.CommandLineTools.10.0.20151218.134438\tools\dupfinder.exe</DupFinderExe>
+    <ReSharperToolsPath>$(SolutionRoot)\Packages\JetBrains.ReSharper.CommandLineTools.$(ReSharperToolsVersion)\tools</ReSharperToolsPath>   
+    <DupFinderExe>$(ReSharperToolsPath)\dupfinder.exe</DupFinderExe>
+    <CodeInspectionsExe>$(ReSharperToolsPath)\inspectCode.exe</CodeInspectionsExe>
+    
+    <DuplicatesReportPath>$(DropsPath)\Duplicates</DuplicatesReportPath>
+    <CodeInspectionsReportPath>$(DropsPath)\Inspections</CodeInspectionsReportPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <DuplicatesReportTemplate Include="$(MSBuildProjectDirectory)\dupFinder.xslt">
+      <BuildNumber>$(SemanticVersion)</BuildNumber>
+    </DuplicatesReportTemplate>
+    <CodeInspectionsReportTemplate Include="$(MSBuildProjectDirectory)\codeInspections.xslt">
+        <BuildNumber>$(SemanticVersion)</BuildNumber>
+    </CodeInspectionsReportTemplate>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\..\Packages\Alphacloud.MSBuild.Xslt.$(XsltTransformVersion)\tools\Alphacloud.MSBuild.Xslt.targets" />
+  
   <Target Name="Build"
         DependsOnTargets="CleanSolution;
                           UpdateAssemblyVersion;
@@ -188,12 +204,23 @@
                             BuildSuccess" />
 
   <Target Name="FindDuplicates">
-    <MakeDir Directories="$(DuplicatesPath)" ContinueOnError="true" />
+    <MakeDir Directories="$(DuplicatesReportPath)" ContinueOnError="true" />
     <Exec
       WorkingDirectory="$(SolutionsPath)"
-      Command="$(DupFinderExe) /output=&quot;$(DuplicatesPath)\dupReport.xml&quot; /show-text &quot;$(SolutionsPath)\SharpArch.sln&quot; /exclude=&quot;SharpArch.Tests\**\*.cs" /> 
-	  <!-- /config-create=&quot;dupFinder.config&quot; -->
-    <XslTransformation XslInputPath="$(MSBuildProjectDirectory)\dupFinder.xslt" XmlInputPaths="$(DuplicatesPath)\dupReport.xml" OutputPaths="$(DuplicatesPath)\report.html"/>
+      Command="$(DupFinderExe) /output=&quot;$(DuplicatesReportPath)\dupReport.xml&quot; /show-text &quot;$(SolutionsPath)\$(SolutionName).sln&quot; /exclude=&quot;SharpArch.Tests\**\*.cs" /> 
+    <Xslt3SingleFileTransform Xslt="@(DuplicatesReportTemplate)" Input="$(DuplicatesReportPath)\dupReport.xml" Output="$(DuplicatesReportPath)\CodeDuplicatesReport.html" />
+  </Target>
+  
+  
+  <Target Name="InspectCode">
+    <MakeDir Directories="$(CodeInspectionsReportPath)" ContinueOnError="true" />
+      <Exec
+          WorkingDirectory="$(SolutionsPath)"
+          Command="$(CodeInspectionsExe) &quot;$(SolutionName).sln&quot; /output=&quot;$(CodeInspectionsReportPath)\codeInspections.xml&quot;" />
+  
+    <Xslt3SingleFileTransform  Xslt="@(CodeInspectionsReportTemplate)" 
+      Input="$(CodeInspectionsReportPath)\codeInspections.xml" 
+      Output="$(CodeInspectionsReportPath)\CodeInspectionsReport.html" />
   </Target>
 
 </Project>

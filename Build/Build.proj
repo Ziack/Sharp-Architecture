@@ -13,7 +13,7 @@
     <MSpecRunner>mspec-clr4.exe</MSpecRunner>
     <MSpecSpecificationAssemblies>"$(MSBuildProjectDirectory)\..\Solutions\SharpArch.Specifications\Bin\Release\SharpArch.Specifications.dll"</MSpecSpecificationAssemblies>
     <ReSharperToolsVersion>10.0.20151218.134438</ReSharperToolsVersion>
-	<XsltTransformVersion>0.2.2.0</XsltTransformVersion>
+    <XsltTransformVersion>0.2.2.0</XsltTransformVersion>
   </PropertyGroup>
 
   <!-- build settings -->

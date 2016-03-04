@@ -1,6 +1,7 @@
 namespace SharpArch.Domain.DomainModel
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using System.Xml.Serialization;
@@ -58,7 +59,7 @@ namespace SharpArch.Domain.DomainModel
                 return true;
             }
 
-            if (compareTo == null || !this.GetType().Equals(compareTo.GetTypeUnproxied()))
+            if (compareTo == null || this.GetType() != compareTo.GetTypeUnproxied())
             {
                 return false;
             }
@@ -86,6 +87,7 @@ namespace SharpArch.Domain.DomainModel
         ///     if at all, in an object's lifetime, it's important that properties are carefully
         ///     selected which truly represent the signature of an object.
         /// </remarks>
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             if (this.cachedHashcode.HasValue)

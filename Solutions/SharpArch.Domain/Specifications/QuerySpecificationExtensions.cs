@@ -3,10 +3,12 @@ namespace SharpArch.Domain.Specifications
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Provides extension methods that extend the <see cref="QuerySpecification{T}"/> class.
     /// </summary>
+    [PublicAPI]
     public static class QuerySpecificationExtensions
     {
         /// <summary>

@@ -74,6 +74,7 @@
                 // then simply return the hashcode of the base object as the hashcode.
                 if (signatureProperties.Length == 0)
                 {
+                    // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
                     return base.GetHashCode();
                 }
 

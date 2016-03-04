@@ -23,6 +23,7 @@ namespace SharpArch.Domain.Specifications
         /// </summary>
         /// <param name="candidates">The candidates.</param>
         /// <returns>A list of satisfying elements.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="candidates"/> is <see langword="null" />.</exception>
         public virtual IQueryable<T> SatisfyingElementsFrom(IQueryable<T> candidates)
         {
             if (candidates == null) throw new ArgumentNullException(nameof(candidates));

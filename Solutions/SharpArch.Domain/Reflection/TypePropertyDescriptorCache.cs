@@ -35,6 +35,7 @@
         /// <param name="type">The type.</param>
         /// <param name="factory">The factory to create descriptor.</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> or <paramref name="factory"/> is <see langword="null" />.</exception>
         public TypePropertyDescriptor GetOrAdd(Type type, Func<Type, TypePropertyDescriptor> factory)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));

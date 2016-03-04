@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics.CodeAnalysis;
     using JetBrains.Annotations;
 
     /// <summary>
@@ -11,6 +12,7 @@
     /// </summary>
     [Serializable]
     [PublicAPI]
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverriden.Global", Justification = "Public API")]
     public abstract class ValidatableObject : BaseObject
     {
         /// <summary>

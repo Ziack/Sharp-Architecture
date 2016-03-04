@@ -1,6 +1,7 @@
 ﻿namespace SharpArch.Domain.DomainModel
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using JetBrains.Annotations;
@@ -16,6 +17,7 @@
     /// </remarks>
     [Serializable]
     [PublicAPI]
+    [SuppressMessage("ReSharper", "RedundantOverridenMember", Justification = "Need to override Equals/GetHashCode because  == and != operators were introduced")]
     public abstract class ValueObject : BaseObject
     {
         /// <summary>

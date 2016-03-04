@@ -11,21 +11,19 @@ namespace SharpArch.Domain.Specifications
     [PublicAPI]
     public class AdHoc<T> : QuerySpecification<T>
     {
-        private readonly Expression<Func<T, bool>> expression;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AdHoc{T}" /> class.
         /// </summary>
         /// <param name="expression">The expression.</param>
         public AdHoc([CanBeNull] Expression<Func<T, bool>> expression)
         {
-            this.expression = expression;
+            this.MatchingCriteria = expression;
         }
 
         /// <summary>
         ///     Gets the matching criteria.
         /// </summary>
         [CanBeNull]
-        public override Expression<Func<T, bool>> MatchingCriteria => this.expression;
+        public override Expression<Func<T, bool>> MatchingCriteria { get; }
     }
 }

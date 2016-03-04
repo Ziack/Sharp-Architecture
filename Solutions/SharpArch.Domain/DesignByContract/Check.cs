@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace SharpArch.Domain
 {
     using System;

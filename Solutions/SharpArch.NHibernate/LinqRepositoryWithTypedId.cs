@@ -9,9 +9,9 @@ namespace SharpArch.NHibernate
     using JetBrains.Annotations;
 
     /// <summary>
-    /// 
+    /// LINQ extensions to NHibernate repository.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Entity type.</typeparam>
     /// <typeparam name="TId">The type of the identifier.</typeparam>
     /// <seealso cref="SharpArch.NHibernate.NHibernateRepositoryWithTypedId{T, TId}" />
     /// <seealso cref="SharpArch.Domain.PersistenceSupport.ILinqRepositoryWithTypedId{T, TId}" />
@@ -62,6 +62,13 @@ namespace SharpArch.NHibernate
             return this.Session.Get<T>(id);
         }
 
+        /// <summary>
+        /// Finds an item by a specification.
+        /// </summary>
+        /// <param name="specification">The specification.</param>
+        /// <returns>
+        /// The matching item or <c>null</c>.
+        /// </returns>
         public T FindOne(ILinqSpecification<T> specification)
         {
             return specification.SatisfyingElementsFrom(this.Session.Query<T>()).SingleOrDefault();

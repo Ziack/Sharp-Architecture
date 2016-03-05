@@ -13,21 +13,19 @@
     [PublicAPI]
     public sealed class SessionFactoryAttribute : Attribute
     {
-        private readonly string factoryKey;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionFactoryAttribute"/> class.
         /// </summary>
         /// <param name="factoryKey">The factory key.</param>
         public SessionFactoryAttribute(string factoryKey)
         {
-            this.factoryKey = factoryKey;
+            this.FactoryKey = factoryKey;
         }
 
-        public string FactoryKey
-        {
-            get { return factoryKey; }
-        }
+        /// <summary>
+        /// Session factory key.
+        /// </summary>
+        public string FactoryKey { get; }
 
         /// <summary>
         ///     Global method to retrieve the factory key from an object, as defined in its 

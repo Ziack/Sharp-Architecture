@@ -10,7 +10,10 @@
     [PublicAPI]
     public class DefaultSessionFactoryKeyProvider : ISessionFactoryKeyProvider
   {
-    public string GetKey()
+        /// <summary>
+        /// Gets the session factory key.
+        /// </summary>
+        public string GetKey()
     {
         return NHibernateSessionFactoryBuilder.DefaultConfigurationName;
     }

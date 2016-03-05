@@ -12,6 +12,10 @@ namespace SharpArch.NHibernate.FluentNHibernate
     [PublicAPI]
     public interface IAutoPersistenceModelGenerator
     {
+        /// <summary>
+        /// Generates persistence model.
+        /// </summary>
+        [NotNull]
         AutoPersistenceModel Generate();
     }
 }

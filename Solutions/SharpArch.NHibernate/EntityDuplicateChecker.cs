@@ -11,6 +11,11 @@
     using global::NHibernate.Util;
     using JetBrains.Annotations;
 
+    /// <summary>
+    /// Checks if entity with the same domain signature already exists in the database.
+    /// </summary>
+    /// <seealso cref="SharpArch.Domain.PersistenceSupport.IEntityDuplicateChecker" />
+    /// <seealso cref="DomainSignatureAttribute"/>.
     [PublicAPI]
     public class EntityDuplicateChecker : IEntityDuplicateChecker
     {
@@ -96,8 +101,6 @@
         [NotNull]
         private ISession GetSessionFor(object entity)
         {
-            //var factoryKey = SessionFactoryKeyHelper.GetKeyFrom(entity);
-            // return NHibernateSession.CurrentFor(factoryKey);
             return this.session;
         }
 

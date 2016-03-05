@@ -23,7 +23,7 @@ namespace SharpArch.Domain.PersistenceSupport
         T FindOne(TId id);
 
         /// <summary>
-        ///     Finds an item by a specification
+        ///     Finds an item by a specification.
         /// </summary>
         /// <param name="specification">The specification.</param>
         /// <returns>The matching item.</returns>

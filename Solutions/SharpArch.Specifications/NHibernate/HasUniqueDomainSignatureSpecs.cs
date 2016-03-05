@@ -19,7 +19,6 @@ namespace SharpArch.Specifications.NHibernate
     using global::NHibernate;
     using global::SharpArch.Domain;
     using global::SharpArch.Domain.PersistenceSupport;
-    using global::SharpArch.Features.Specifications;
     using global::SharpArch.NHibernate;
     using global::SharpArch.NHibernate.NHibernateValidator;
 

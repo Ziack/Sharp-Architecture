@@ -59,14 +59,33 @@ namespace SharpArch.Web.Mvc.JsonNet
 
         #region Properties
 
+        /// <summary>
+        /// Content encoding.
+        /// </summary>
         public Encoding ContentEncoding { get; set; }
 
+        /// <summary>
+        /// MIME Content type.
+        /// </summary>
+        /// <remarks>
+        /// See http://www.freeformatter.com/mime-types-list.html#mime-types-list for list of content types.
+        /// </remarks>
         public string ContentType { get; set; }
 
+        /// <summary>
+        /// Data to serialize.
+        /// </summary>
         public object Data { get; set; }
 
+        /// <summary>
+        /// Controls Json formatting.
+        /// </summary>
         [CLSCompliant(false)]
         public Formatting Formatting { get; set; }
+
+        /// <summary>
+        /// Json serializer settings.
+        /// </summary>
         [CLSCompliant(false)]
         public JsonSerializerSettings SerializerSettings { get; set; }
 

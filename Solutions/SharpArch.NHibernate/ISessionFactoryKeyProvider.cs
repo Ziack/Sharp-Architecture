@@ -2,6 +2,10 @@
 {
     using JetBrains.Annotations;
 
+
+    /// <summary>
+    /// Provides the key to retrieve session factory from IoC.
+    /// </summary>
     [PublicAPI]
     public interface ISessionFactoryKeyProvider
   {

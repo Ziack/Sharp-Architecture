@@ -112,7 +112,7 @@
 
             var builder = new NHibernateSessionFactoryBuilder()
                 .AddMappingAssemblies(mappingAssemblies)
-                .UseAutoPersitenceModel(autoPersistenceModel);
+                .UseAutoPersistenceModel(autoPersistenceModel);
 
             var defaultConfigFilePath = Path.Combine(basePath, NHibernateSessionFactoryBuilder.DefaultNHibernateConfigFileName);
             if (File.Exists(defaultConfigFilePath))

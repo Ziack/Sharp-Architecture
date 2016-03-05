@@ -18,7 +18,7 @@
         ///     cached <see cref = "Configuration" /> is out of date or not.</param>
         /// <param name="mappingAssemblies">List of assemblies containing HBM files.</param>
         /// <returns>If an up to date cached object is available, a <see cref = "Configuration" /> object, otherwise null.</returns>
-        [NotNull]
+        [CanBeNull]
         Configuration LoadConfiguration([NotNull] string configKey, string configPath,
             [NotNull] IEnumerable<string> mappingAssemblies);
 

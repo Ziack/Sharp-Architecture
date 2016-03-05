@@ -17,13 +17,22 @@
     [PublicAPI]
     public class WcfSessionFacility : IFacility
     {
+        /// <summary>
+        /// The manage WCF sessions key
+        /// </summary>
         public const string ManageWcfSessionsKey = "ManageWcfSessions";
 
+        /// <summary>
+        /// Initializes the facility.
+        /// </summary>
         public void Init(IKernel kernel, IConfiguration facilityConfig)
         {
             kernel.ComponentDestroyed += KernelComponentDestroyed;
         }
-
+        
+        /// <summary>
+        /// Terminates the facility.
+        /// </summary>
         public void Terminate()
         {
         }

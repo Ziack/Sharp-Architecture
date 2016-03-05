@@ -7,6 +7,16 @@ namespace SharpArch.NHibernate.NHibernateValidator
     using Domain.PersistenceSupport;
     using JetBrains.Annotations;
 
+    /// <summary>
+    /// Performs validation of domain signature uniqueness.
+    /// </summary>
+    /// <remarks>
+    /// Performs database search to ensure no other entity with same domain signature exists.
+    /// </remarks>
+    /// <seealso cref="System.ComponentModel.DataAnnotations.ValidationAttribute" />
+    /// <seealso cref="DomainSignatureAttribute"/>.
+    [PublicAPI]
+    [BaseTypeRequired(typeof(IEntityWithTypedId<>))]
     public class HasUniqueDomainSignatureAttributeBase : ValidationAttribute
     {
         /// <summary>
@@ -20,10 +30,7 @@ namespace SharpArch.NHibernate.NHibernateValidator
         /// <summary>
         /// Gets a value that indicates whether the attribute requires validation context.
         /// </summary>
-        public override bool RequiresValidationContext
-        {
-            get { return true; }
-        }
+        public override bool RequiresValidationContext => true;
 
         /// <summary>
         /// Performs database lookup to ensure domain signature uniqueness.
@@ -32,7 +39,7 @@ namespace SharpArch.NHibernate.NHibernateValidator
         /// <param name="value">The entity.</param>
         /// <param name="validationContext">The validation context.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException"></exception>
+        /// <exception cref="System.InvalidOperationException"><see cref="IEntityDuplicateChecker"/>can not be resolvedfrom <paramref name="validationContext"/>.</exception>
         protected ValidationResult DoValidate<TId>([NotNull] object value, [NotNull] ValidationContext validationContext)
         {
             var entityToValidate = value as IEntityWithTypedId<TId>;
@@ -42,6 +49,9 @@ namespace SharpArch.NHibernate.NHibernateValidator
                     typeof(TId), value.GetType()));
 
             var duplicateChecker = (IEntityDuplicateChecker) validationContext.GetService(typeof (IEntityDuplicateChecker));
+            if (duplicateChecker == null)
+                throw new InvalidOperationException(
+                    $"'{typeof(IEntityDuplicateChecker).Name}' can not be resolved from validation context.");
             return duplicateChecker.DoesDuplicateExistWithTypedIdOf(entityToValidate)
                 ? new ValidationResult(ErrorMessage)
                 : ValidationResult.Success;

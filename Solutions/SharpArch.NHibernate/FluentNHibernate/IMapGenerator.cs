@@ -18,8 +18,14 @@
     [PublicAPI]
     public interface IMapGenerator
     {
+        /// <summary>
+        /// File name.
+        /// </summary>
         string FileName { get; }
 
+        /// <summary>
+        /// Generates XML mapping document.
+        /// </summary>
         [NotNull]
         XmlDocument Generate();
     }

@@ -5,6 +5,12 @@
     using Domain.PersistenceSupport;
     using JetBrains.Annotations;
 
+    /// <summary>
+    /// LINQ extensions to NHibernate repository.    
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <seealso cref="int" />
+    /// <seealso cref="SharpArch.Domain.PersistenceSupport.ILinqRepository{T}" />
     [PublicAPI]
     public class LinqRepository<T> : LinqRepositoryWithTypedId<T, int>, ILinqRepository<T>
     {
